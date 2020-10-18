@@ -1,0 +1,82 @@
+Documentation:
+
+ReportGenerationService endpoints:
+
+HttpGet https://localhost:44303/api/v1/Report/SingleCustomerPreferences/
+
+properties and types:
+{
+    "Customer":
+        {
+            "Name": "B", (string)
+            "CustomerPreference": {
+                "SpecificMonthDay": 2, (byte) [1-28]
+                "SpecificDaysOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], (Enum Array) 
+                "Type": ["Never","EveryDay","DaysOfWeek","SpecificDayOfMonth"] (Enum) 
+            }           
+        }
+}
+
+Sample Request body:
+{
+    "Customer":
+        {
+            "Name": "B",
+            "CustomerPreference": {
+                "SpecificMonthDay": null,
+                "SpecificDaysOfWeek": ["Sunday", "Monday"],
+                "Type": "DaysOfWeek"
+            }           
+        }
+}
+
+Responses:
+- 200
+- 418 : "customer_cannot_be_null"
+- 418 : "value_must_be_between_1_and_28"
+- 418 : "specificDayOfMonth_must_be_specified"
+- 418 : "specificDaysOfWeek_must_be_specified"
+
+
+HttpGet https://localhost:44303/api/v1/Report/AllCustomerPreferences/
+
+properties and types:
+{
+    "Customers":[
+        {
+            "Name": "B", (string)
+            "CustomerPreference": {
+                "SpecificMonthDay": 2, (byte) [1-28]
+                "SpecificDaysOfWeek": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], (Enum Array) 
+                "Type": ["Never","EveryDay","DaysOfWeek","SpecificDayOfMonth"] (Enum) 
+            }           
+        }
+    ]
+}
+
+{
+    "Customers":[
+        {
+            "Name": "A",
+            "CustomerPreference": {
+                "SpecificMonthDay": null,
+                "SpecificDaysOfWeek": null,
+                "Type": "EveryDay"
+            }           
+        },
+        {
+            "Name": "B",
+            "CustomerPreference": {
+                "SpecificMonthDay": null,
+                "SpecificDaysOfWeek": ["Sunday", "Monday"],
+                "Type": "DaysOfWeek"
+            }           
+        }
+    ]
+}
+
+Responses:
+- 200
+- 418 : "value_must_be_between_1_and_28"
+- 418 : "specificDayOfMonth_must_be_specified"
+- 418 : "specificDaysOfWeek_must_be_specified"
